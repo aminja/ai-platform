@@ -1,0 +1,9 @@
+name: sentiment-analysis
+
+conda_env: conda.yaml
+
+entry_points:
+  main:
+    parameters:
+      alpha: float
+    command: "PYTHONHASHSEED=0 python main.py {alpha}"
