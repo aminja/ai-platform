@@ -9,3 +9,5 @@ dependencies:
   - gensim=3.4.0
   - pip:
     - mlflow
+    - nltk=3.4.3
+    - sklearn

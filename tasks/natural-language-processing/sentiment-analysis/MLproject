@@ -3,7 +3,39 @@ name: sentiment-analysis
 conda_env: conda.yaml
 
 entry_points:
+  # Handler for the input file to load and preprocess texts
+  data_handler:
+    parameters:
+      data_path: {type: string}
+      text_col: {type: string}
+      label_col: {type: string}
+      punctuation: {type: int}
+    command: "python data_handler.py {data_path} {text_col} {label_col} {punctuation}"
+
+
+  word2vec_vectorizer:
+    parameters:
+      data_path: path
+      text_col: {type: string}
+      dimension: {type: int, default: 30}
+    command: "python word2vec_vectorizer.py {data_path} {text_col} {dimension}"
+
+
+  random_forest:
+    parameters:
+      data_path: path
+      feature_column: {type: string, default: 'vectorized'}
+      label_col: {type: string, default: 'airline_sentiment'}
+      n_estimators: {type: int, default: 100}
+      max_depth: {type: int, default: 30}
+    command: "python random_forest.py {data_path} {feature_column} {label_col} {n_estimators} {max_depth}"
+
+
   main:
     parameters:
-      alpha: float
-    command: "PYTHONHASHSEED=0 python main.py {alpha}"
+      data_path: {type: string, default: 'Tweets.csv'}
+      text_col: {type: string, default: 'text'}
+      label_col: {type: string, default: 'airline_sentiment'}
+      punctuation: {type: int, default: 1}
+    command: "PYTHONHASHSEED=0 python main.py {data_path} {text_col} {label_col} {punctuation}"
+
